@@ -1,0 +1,27 @@
+https://seokjin2.tistory.com/35
+- 특징 : gotoxy 사용, 부모클래스인  block를 이용 후 자식 클래스로 7개의 블록 클래스를 생성 후 사용, 게임 테이블 클래스를 이용하여 게임 루프 작동
+
+https://codereview.stackexchange.com/questions/74293/text-based-tetris-game
+- 특징 : 나랑 비슷하게 짬 system("cls")사용, 특이하게 게임 루프 함수를 이용하여 시간을 체크함, 매직넘버 사용함 c++이지만 객체지향으로 짜지 않음
+
+https://m.blog.naver.com/azure0777/220326224678
+- 특징 : 2인용 테트리스, 하나의 cpp로 만듬, block, Tetris 클래스 총 2개를 사용하여 작성함, block는 모양이나 색이나 좌표 같은 것들, 테트리스가 게임 루프 및 그래픽 모든 것을 총괄하는 클래스인듯 하다.
+
+https://kibbomi.tistory.com/161
+- 특징 : point, board, score, controller, tetromino, tetris, option 클래스 총 8개 클래스를 사용함 각각 클래스마다 일이 부여되어있다 point같은 경우는 좌표 board같은 경우는 맵 크기, score는 점수, controller는 입출력, tetrmino 는 테트리스 블럭 관련, tetris는 게임루프,  option은 속도조정, 블록 저장기능 관련 화면 세팅 관리가 되어있다. 특히 테트미노 클래스 같은 경우는 #define를 사용하여 매직넘버를 사용하지 않는 경우가 보인다. 그리고 각각 클래스별로 역할이 잘 구별되어있다. 하지만 내 생각이긴 하지만 point나 board나 score나 controller 총 4개 클래스는 없어도 될듯한 클래스 처럼 보인다.
+
+https://kkikkodev.tistory.com/44
+- 특징 : UML로 나와있어 이해하기가 쉬웠음, TetrisView, TetrisManager, Block, Util 총 4개의 클래스를 이용 그외는 열거형을 통하여 매직넘버를 사용하지 않는 방향으로 함 Point 구조체를 만들어서 사용, 특이하게 Util이라는 클래스를 이용하여 좌표이동 클래스를 만들어서 사용(나중에 출력할때 쓰기 위함)
+
+https://kknafactory.tistory.com/6
+- 특징 : 특이하게 큐를 통하여 코드를 작성함, 구조체를 이용하면서 테트리미노 클래스, 그 외 작업을 하는 클래스이 두개로 나누어져서 작성함 다음 테트리미노 값을 큐에다 저장을 하는 방법을 채택 따로 생성을 하지 않아  delete작업이 필요 없음
+
+https://www.programmersought.com/article/1345767502/
+- 특징 : c++ sfml를 이용한 코드 타이머, 필드 체크, 칸 비우기, 그리기, 등 알고리즘 위주로 설명되어있음 SFML을 써보거나 들어본적이 없어서 패스
+
+http://soen.kr/lecture/ccpp/cpp2/14-3-1.htm
+- 특징 : C스타일의 테트리스 작성 역시나 #define를 통해 매직넘버를 절대로 사용하지 않음, gotoxy를 통해서 빠르게 작성한 것으로 보임, 사이트 자체적으로 코드 분석을 해서 좋았음
+
+
+
+
