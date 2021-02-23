@@ -14,6 +14,5 @@ public:
 	void LineDelete();
 	void LineCreate();
 	void LineMove(int upDown);
-
 };
 

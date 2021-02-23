@@ -11,6 +11,18 @@ private:
 
 public:
 	Graphics();
+	void InitMap(int score);
+	void UpdateMap();
+	void DeleteMap();
+
+	void StartUI();
+	void GameOverUI();
+
+	void CreateBuffer();
+	void WriteBuffer();
+	void FlippingBuffer();
+	void ClearBuffer();
+	void DeleteBuffer();
 
 	
 };
