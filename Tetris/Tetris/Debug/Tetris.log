@@ -1,8 +1,2 @@
-﻿  Game.cpp
-  Graphics.cpp
-  LineContainer.cpp
-  Tetris.cpp
-  TetrisContainer.cpp
-  코드를 생성하고 있습니다...
-MSVCRTD.lib(exe_main.obj) : error LNK2019: _main"int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
-C:\Users\haeho\Desktop\PERSONAL\C++\Tetris\Tetris\.git\Tetris\Debug\Tetris.exe : fatal error LNK1120: 1개의 확인할 수 없는 외부 참조입니다.
+﻿  TetrisContainer.cpp
+  Tetris.vcxproj -> C:\Users\haeho\Desktop\PERSONAL\C++\Tetris\Tetris\Tetris\Debug\Tetris.exe

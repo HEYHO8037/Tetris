@@ -1,6 +1,7 @@
 #pragma once
 
 
+constexpr auto initPointer = nullptr;
 enum Direction { UP, DOWN };
 
 class LineContainer

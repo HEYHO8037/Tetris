@@ -2,19 +2,27 @@
 #include "Tetris.h"
 #include "LineContainer.h"
 
-constexpr auto initPointer = nullptr;
-enum Direction { UP, DOWN, LEFT, RIGHT };
+constexpr int MaxMapY = 40;
+constexpr int MaxMapX = 20;
+enum dir
+{ 
+	dirUp,
+	dirDown,
+	dirLeft,
+	dirRight
+};
 
 class TetrisContainer
 {
 private:
-	int (*map)[20];
+	int (*map)[MaxMapX];
+	int (*tetrisMember)[4];
 	Tetris* tetris;
 	LineContainer* lineCont;
 	
 public:
 	TetrisContainer();
-	TetrisContainer(int getMap[40][20]);
+	TetrisContainer(int getMap[MaxMapY][MaxMapX]);
 	void InitTetris();
 	void ShowTetris();
 	void MoveTetris(int direction);
