@@ -3,7 +3,7 @@
 TetrisContainer::TetrisContainer()
 {
 	tetris = initPointer;
-	int(*map)[40][20] = nullptr;
+	int(*map)[MaxMapX] = nullptr;
 }
 
 TetrisContainer::TetrisContainer(int getMap[MaxMapY][MaxMapX])
@@ -19,19 +19,20 @@ void TetrisContainer::InitTetris()
 
 void TetrisContainer::ShowTetris()
 {
-	int y;
-	int x;
-	int h;
+	int width;
+	int height;
+	int calculateTetris;
+	const int (*saveTetris)[4] = *tetris->getTetrisMember();
 
-	for (int height = 0; height < 4; height++)
+	for (int y = 0; y < 4; y++)
 	{
-		for (int length = 0; length < 4; length++)
+		for (int x = 0; x < 4; x++)
 		{
-			y = tetris->getposY();
-			x = tetris->getposX();
-			h = (*(tetris->getTetrisMember() + height) + length);
+			height = tetris->getposY() + y;
+			width = tetris->getposX() + x;
+			calculateTetris = (*(*(saveTetris+y)+x)); //TetrisMember의 주소값을 Y씩 더한 다음에 값을 가져오고(첫번째 가져오기) 다시 X씩 더한 다음 값을 가져옴(2차원 배열)
 
-			map[tetris->getposY() + height][tetris->getposX() + length] += tetris->getTetrisMember()[height][length];
+			map[height][width] += calculateTetris;
 		}
 	}
 }

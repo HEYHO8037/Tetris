@@ -16,7 +16,6 @@ class TetrisContainer
 {
 private:
 	int (*map)[MaxMapX];
-	int (*tetrisMember)[4];
 	Tetris* tetris;
 	LineContainer* lineCont;
 	

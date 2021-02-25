@@ -71,7 +71,7 @@ const bool Tetris::getIsChecked()
 	return isChecked;
 }
 
-const int* Tetris::getTetrisMember()
+const TetrisType* Tetris::getTetrisMember()
 {
-	return *tetrisSelectMember;
+	 return &tetrisSelectMember;
 }
