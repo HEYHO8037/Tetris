@@ -17,7 +17,7 @@ enum GuidLine
 class Graphics
 {
 private:
-	static HANDLE hBuffer[MaxBuffer];
+	HANDLE hBuffer[MaxBuffer];
 	int screenIndex;
 	int* score;
 
@@ -33,7 +33,7 @@ public:
 	void GameOverUI();
 
 	void CreateBuffer();
-	void WriteBuffer();
+	void WriteBuffer(int x, int y, const char str[]);
 	void FlippingBuffer();
 	void ClearBuffer();
 	void DeleteBuffer();

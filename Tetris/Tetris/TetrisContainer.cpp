@@ -14,15 +14,61 @@ TetrisContainer::TetrisContainer(int getMap[MaxMapY][MaxMapX])
 
 void TetrisContainer::InitTetris()
 {
-	tetris = new Tetris();
+	if (deleteTetris == true)
+	{
+		tetris = new Tetris();
+		saveTetris = *tetris->getTetrisMember();
+		deleteTetris == false;
+	}
 }
 
 void TetrisContainer::ShowTetris()
 {
-	int width;
-	int height;
-	int calculateTetris;
-	const int (*saveTetris)[4] = *tetris->getTetrisMember();
+	for (int y = 0; y < 4; y++)
+	{
+		for (int x = 0; x < 4; x++)
+		{
+			height = tetris->getposY() + y;
+			width = tetris->getposX() + x;
+			calculateTetris = (*(*(saveTetris + y) + x)); //TetrisMember의 주소값을 Y씩 더한 다음에 값을 가져오고(첫번째 가져오기) 다시 X씩 더한 다음 값을 가져옴(2차원 배열)
+			map[height][width] += calculateTetris;
+		}
+	}
+}
+
+void TetrisContainer::MoveTetris(int xORy, int direction)
+{
+
+	if (xORy == dirUp || xORy == dirDown)
+	{
+		MoveDeleteTetris();
+		tetris->ChangePosY(direction);
+		ShowTetris();
+	}
+	else if (xORy == dirLeft || xORy == dirRight)
+	{
+		MoveDeleteTetris();
+		tetris->ChangePosY(direction);
+		ShowTetris();
+	}
+}
+void TetrisContainer::MoveDeleteTetris()
+{
+	for (int y = 0; y < 4; y++)
+	{
+		for (int x = 0; x < 4; x++)
+		{
+			height = tetris->getposY() + y;
+			width = tetris->getposX() + x;
+			map[height][width] = 0;
+		}
+	}
+}
+void TetrisContainer::CheckTetris()
+{
+	int savePosition = 0;
+	int saveXPos;
+	int saveYPos;
 
 	for (int y = 0; y < 4; y++)
 	{
@@ -30,26 +76,35 @@ void TetrisContainer::ShowTetris()
 		{
 			height = tetris->getposY() + y;
 			width = tetris->getposX() + x;
-			calculateTetris = (*(*(saveTetris+y)+x)); //TetrisMember의 주소값을 Y씩 더한 다음에 값을 가져오고(첫번째 가져오기) 다시 X씩 더한 다음 값을 가져옴(2차원 배열)
+			calculateTetris = (*(*(saveTetris + y) + x)); //TetrisMember의 주소값을 Y씩 더한 다음에 값을 가져오고(첫번째 가져오기) 다시 X씩 더한 다음 값을 가져옴(2차원 배열)
 
-			map[height][width] += calculateTetris;
+			if (map[height][width] == calculateTetris)
+			{
+				saveX[savePosition] = width;
+				saveY[savePosition] = height;
+				savePosition++;
+			}
+		}
+	}
+
+	for (int position = 0; position < savePosition; position++)
+	{
+		saveXPos = saveX[position];
+		saveYPos = ++saveY[position];
+
+		if (map[saveYPos][saveXPos] == exist)
+		{
+			tetris->ChangeisChecked();
 		}
 	}
 }
 
-void TetrisContainer::MoveTetris(int direction)
-{
 
-}
-void TetrisContainer::MoveDeleteTetris()
-{
-
-}
-void TetrisContainer::CheckTetris()
-{
-
-}
 void TetrisContainer::DeleteTetris()
 {
-
+	if (tetris->getIsChecked() == true)
+	{
+		delete tetris;
+		deleteTetris = true;
+	}
 }

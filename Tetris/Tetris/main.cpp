@@ -6,10 +6,20 @@ int main(void)
 	TetrisContainer* ts = new TetrisContainer(gph->tetrisMap);
 
 	gph->InitMap(score);
+	gph->CreateBuffer();
+	gph->ClearBuffer();
+
 	ts->InitTetris();
+
 	ts->ShowTetris();
 
 	gph->UpdateMap();
+	gph->FlippingBuffer();
 
+
+
+	gph->DeleteBuffer();
+	delete ts;
+	delete gph;
 	return 0;
 }
