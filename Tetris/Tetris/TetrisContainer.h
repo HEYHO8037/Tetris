@@ -2,8 +2,9 @@
 #include "Tetris.h"
 #include "LineContainer.h"
 
-constexpr int MaxMapY = 40;
-constexpr int MaxMapX = 20;
+constexpr int MaxSaveNum = 4;
+constexpr int mapX = 20;
+constexpr int mapY = 40;
 
 enum dir
 { 
@@ -22,13 +23,13 @@ enum block
 class TetrisContainer
 {
 private:
-	int (*map)[MaxMapX];
+	int (*map)[mapX];
 	int height;
 	int width;
 	int calculateTetris;
-	const int(*saveTetris)[4];
-	int saveX[4];
-	int saveY[4];
+	const int(*saveTetris)[MaxSaveNum];
+	int saveX[MaxSaveNum];
+	int saveY[MaxSaveNum];
 	bool deleteTetris = true;
 
 	Tetris* tetris;
@@ -36,7 +37,7 @@ private:
 	
 public:
 	TetrisContainer();
-	TetrisContainer(int getMap[MaxMapY][MaxMapX]);
+	TetrisContainer(int getMap[mapY][mapX]);
 	void InitTetris();
 	void ShowTetris();
 	void MoveTetris(int xORy, int direction);

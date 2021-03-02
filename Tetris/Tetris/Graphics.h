@@ -2,8 +2,8 @@
 #include <Windows.h>
 #include <iostream>
 
-constexpr int MaxY = 40;
-constexpr int MaxX = 20;
+constexpr int mapMaxY = 40;
+constexpr int mapMaxX = 20;
 constexpr int MaxBuffer = 2;
 
 enum GuidLine
@@ -22,7 +22,7 @@ private:
 	int* score;
 
 public:
-	int tetrisMap[MaxY][MaxX];
+	int tetrisMap[mapMaxY][mapMaxX];
 
 	Graphics();
 	void InitMap(int getScore);

@@ -3,10 +3,10 @@
 TetrisContainer::TetrisContainer()
 {
 	tetris = initPointer;
-	int(*map)[MaxMapX] = nullptr;
+	int(*map)[mapX] = nullptr;
 }
 
-TetrisContainer::TetrisContainer(int getMap[MaxMapY][MaxMapX])
+TetrisContainer::TetrisContainer(int getMap[mapY][mapX])
 {
 	map = getMap;
 	lineCont = new LineContainer(getMap);

@@ -5,16 +5,16 @@ Tetris::Tetris()
 	srand(time(NULL));
 	randNum = rand() % maxMember;
 
-	for (int height = 0; height < maxY; height++)
+	for (int height = 0; height < tetrisMaxY; height++)
 	{
-		for (int length = 0; length < maxX; length++)
+		for (int length = 0; length < tetrisMaxX; length++)
 		{
 			tetrisSelectMember[height][length] = tetrisMember[randNum][height][length];
 		}
 	}
 
-	posX = initX;
-	posY = initY;
+	posX = initTetrisX;
+	posY = initTetrisY;
 	isChecked = false;
 }
 

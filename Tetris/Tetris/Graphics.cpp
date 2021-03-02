@@ -7,9 +7,9 @@ Graphics::Graphics()
 {
 	score = &getScore;
 
-	for (int height = 0; height < MaxY; height++)
+	for (int height = 0; height < mapMaxY; height++)
 	{
-		for (int length = 0; length < MaxX; length++)
+		for (int length = 0; length < mapMaxX; length++)
 		{
 			if (height == UpLine || height == DownLine)
 			{
@@ -29,9 +29,9 @@ Graphics::Graphics()
 
 void Graphics::UpdateMap()
 {
-	for (int height = 0; height < MaxY; height++)
+	for (int height = 0; height < mapMaxY; height++)
 	{
-		for (int length = 0; length < MaxX; length++)
+		for (int length = 0; length < mapMaxX; length++)
 		{
 			if (tetrisMap[height][length] == 0)
 			{
@@ -48,9 +48,9 @@ void Graphics::UpdateMap()
 
 void Graphics::DeleteMap()
 {
-	for (int y = 0; y < MaxY; y++)
+	for (int y = 0; y < mapMaxY; y++)
 	{
-		for (int x = 0; x < MaxX; x++)
+		for (int x = 0; x < mapMaxX; x++)
 		{
 			tetrisMap[y][x] = 0;
 		}
@@ -70,13 +70,13 @@ void Graphics::GameOverUI()
 
 void Graphics::CreateBuffer()
 {
-	COORD size = { 20, 50 };
+	COORD size = { 20, 40 };
 	CONSOLE_CURSOR_INFO cci;
 	SMALL_RECT rect;
 	rect.Bottom = 0;
 	rect.Left = 0;
 	rect.Right = 19;
-	rect.Top = 49;
+	rect.Top = 39;
 
 	hBuffer[0] = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
 	SetConsoleScreenBufferSize(hBuffer[0], size);
