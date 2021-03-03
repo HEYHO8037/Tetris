@@ -78,6 +78,19 @@ void LineContainer::LineMove()
 {
 	for (int y = lastLineY; y > 0; y--)
 	{
-
+		for (int x = 0; x < edgeMapX; x++)
+		{
+			if (y == lastLineY)
+			{
+				savefrontLine[first][x] = map[y][x];
+				map[y][x] = 0;
+			}
+			else
+			{
+				savefrontLine[second][x] = map[y][x];
+				map[y][x] = savefrontLine[first][x];
+				savefrontLine[first][x] = savefrontLine[second][x];
+			}
+		}
 	}
 }

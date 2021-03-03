@@ -31,6 +31,7 @@ private:
 	int saveX[MaxSaveNum];
 	int saveY[MaxSaveNum];
 	bool deleteTetris = true;
+	bool isTetrisStop;
 
 	Tetris* tetris;
 	LineContainer* lineCont;
@@ -43,7 +44,7 @@ public:
 	void MoveTetris(int xORy, int direction);
 	void MoveDeleteTetris();
 	void CheckTetris();
-	void CheckisChecked();
+	void LineProcess();
 	void DeleteTetris();
 	
 };

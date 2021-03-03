@@ -22,6 +22,8 @@ void TetrisContainer::InitTetris()
 	}
 }
 
+
+
 void TetrisContainer::ShowTetris()
 {
 	for (int y = 0; y < 4; y++)
@@ -96,6 +98,18 @@ void TetrisContainer::CheckTetris()
 		{
 			tetris->ChangeisChecked();
 		}
+	}
+}
+
+void TetrisContainer::LineProcess()
+{
+	isTetrisStop = tetris->getIsChecked();
+	if (isTetrisStop == true)
+	{
+		lineCont->LineCheck();
+		lineCont->LineDelete();
+		lineCont->LineMove();
+		lineCont->LineCreate();
 	}
 }
 

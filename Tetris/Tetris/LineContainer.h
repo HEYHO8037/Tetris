@@ -9,6 +9,8 @@ constexpr int lastLineY = 39;
 constexpr int saveNum = 2;
 constexpr int edgeMapY = 40;
 constexpr int edgeMapX = 20;
+constexpr int first = 0;
+constexpr int second = 1;
 
 enum Direction 
 { 
