@@ -3,14 +3,25 @@
 #include <ctime>
 
 constexpr auto initPointer = nullptr;
+
 constexpr int reset = 0;
+
 constexpr int maxDelLine = 4;
-constexpr int lastLineY = 39;
+
+constexpr int lastLineY = 38;
+constexpr int firstLineY = 1;
+
 constexpr int saveNum = 2;
+
 constexpr int edgeMapY = 40;
-constexpr int edgeMapX = 20;
+constexpr int edgeMapX = 19;
+constexpr int firstMapX = 1;
+
 constexpr int first = 0;
 constexpr int second = 1;
+
+constexpr int maxRandom = 18;
+constexpr int plusMinimum = 1;
 
 enum Direction 
 { 

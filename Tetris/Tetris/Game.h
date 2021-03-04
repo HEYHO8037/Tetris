@@ -2,6 +2,13 @@
 #include "TetrisContainer.h"
 #include "Graphics.h"
 #include <time.h>
+#include <conio.h>
+
+constexpr int arrowPress = 224;
+constexpr int arrowDown = 80;
+constexpr int arrowLeft = 75;
+constexpr int arrowRight = 77;
+constexpr int spaceBar = 32;
 
 class Game
 {

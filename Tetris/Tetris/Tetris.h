@@ -4,8 +4,16 @@
 
 constexpr int initTetrisX = 8, initTetrisY = 1;
 constexpr int tetrisMaxY = 4, tetrisMaxX = 4;
+
 constexpr int maxMember = 7;
+
 constexpr int blockNum = 4;
+
+constexpr int initZero = 0;
+
+constexpr int MaxSetTetrisX = 3;
+constexpr int OverSetTetris = 4;
+
 typedef int TetrisType[4][4];
 
 enum PlusMinus
@@ -66,7 +74,9 @@ private:
 	int randNum;
 	int posX;
 	int posY;
-	bool isChecked;
+	bool isChecked = false;
+	int setTetrisY = initZero;
+	int setTetrisX = initZero;
 public:
 	Tetris();
 	void ChangePosX(int plusminus);
@@ -74,8 +84,9 @@ public:
 	void ChangeisChecked();
 
 	const int getposX();
-    const int getposY();
+    int getposY();
 	const bool getIsChecked();
 	const TetrisType* getTetrisMember();
+	const void setTetrisMember(int settingMember);
 };
 

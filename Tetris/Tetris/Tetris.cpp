@@ -12,7 +12,6 @@ Tetris::Tetris()
 			tetrisSelectMember[height][length] = tetrisMember[randNum][height][length];
 		}
 	}
-
 	posX = initTetrisX;
 	posY = initTetrisY;
 	isChecked = false;
@@ -29,10 +28,6 @@ void Tetris::ChangePosX(int plusminus)
 	{
 		posX--;
 	}
-	else
-	{
-		return;
-	}
 }
 
 void Tetris::ChangePosY(int plusminus)
@@ -44,10 +39,6 @@ void Tetris::ChangePosY(int plusminus)
 	else if (plusminus == MINUS)
 	{
 		posY--;
-	}
-	else
-	{
-		return;
 	}
 }
 
@@ -61,7 +52,7 @@ const int Tetris::getposX()
 	return posX;
 }
 
-const int Tetris::getposY()
+int Tetris::getposY()
 {
 	return posY;
 }
@@ -74,4 +65,23 @@ const bool Tetris::getIsChecked()
 const TetrisType* Tetris::getTetrisMember()
 {
 	 return &tetrisSelectMember;
+}
+
+const void Tetris::setTetrisMember(int settingMember)
+{
+	if (setTetrisY == OverSetTetris)
+	{
+		setTetrisX = initZero;
+		setTetrisY = initZero;
+	}
+	else if (setTetrisX == MaxSetTetrisX)
+	{
+		setTetrisX = initZero;
+		setTetrisY++;
+	}
+	else
+	{
+		tetrisSelectMember[setTetrisY][setTetrisX] = settingMember;
+		setTetrisX++;
+	}
 }

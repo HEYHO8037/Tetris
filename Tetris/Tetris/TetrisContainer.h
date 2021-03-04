@@ -3,6 +3,9 @@
 #include "LineContainer.h"
 
 constexpr int MaxSaveNum = 4;
+constexpr int One = 1;
+constexpr int noInside = -1;
+
 constexpr int mapX = 20;
 constexpr int mapY = 40;
 
@@ -32,6 +35,7 @@ private:
 	int saveY[MaxSaveNum];
 	bool deleteTetris = true;
 	bool isTetrisStop;
+	int saveRotateTetris[tetrisMaxY][tetrisMaxX];
 
 	Tetris* tetris;
 	LineContainer* lineCont;
@@ -42,6 +46,7 @@ public:
 	void InitTetris();
 	void ShowTetris();
 	void MoveTetris(int xORy, int direction);
+	void RotateTetris();
 	void MoveDeleteTetris();
 	void CheckTetris();
 	void LineProcess();

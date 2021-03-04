@@ -18,7 +18,7 @@ void TetrisContainer::InitTetris()
 	{
 		tetris = new Tetris();
 		saveTetris = *tetris->getTetrisMember();
-		deleteTetris == false;
+		deleteTetris = false;
 	}
 }
 
@@ -26,9 +26,9 @@ void TetrisContainer::InitTetris()
 
 void TetrisContainer::ShowTetris()
 {
-	for (int y = 0; y < 4; y++)
+	for (int y = initZero; y < tetrisMaxY; y++)
 	{
-		for (int x = 0; x < 4; x++)
+		for (int x = initZero; x < tetrisMaxX; x++)
 		{
 			height = tetris->getposY() + y;
 			width = tetris->getposX() + x;
@@ -45,20 +45,41 @@ void TetrisContainer::MoveTetris(int xORy, int direction)
 	{
 		MoveDeleteTetris();
 		tetris->ChangePosY(direction);
-		ShowTetris();
 	}
 	else if (xORy == dirLeft || xORy == dirRight)
 	{
 		MoveDeleteTetris();
-		tetris->ChangePosY(direction);
-		ShowTetris();
+		tetris->ChangePosX(direction);
 	}
 }
+
+void TetrisContainer::RotateTetris()
+{
+	MoveDeleteTetris();
+
+	for (int y = initZero; y < tetrisMaxY; y++)
+	{
+		for (int x = initZero; x < tetrisMaxX; x++)
+		{
+			calculateTetris = (*(*(saveTetris + y) + x)); //TetrisMember의 주소값을 Y씩 더한 다음에 값을 가져오고(첫번째 가져오기) 다시 X씩 더한 다음 값을 가져옴(2차원 배열)
+			saveRotateTetris[x][y] = calculateTetris;
+		}
+	}
+
+	for (int y = initZero; tetrisMaxY < 4; y++)
+	{
+		for (int x = initZero; tetrisMaxX < 4; x++)
+		{
+			tetris->setTetrisMember(saveRotateTetris[y][x]);
+		}
+	}
+}
+
 void TetrisContainer::MoveDeleteTetris()
 {
-	for (int y = 0; y < 4; y++)
+	for (int y = initZero; y < tetrisMaxY; y++)
 	{
-		for (int x = 0; x < 4; x++)
+		for (int x = initZero; x < tetrisMaxX; x++)
 		{
 			height = tetris->getposY() + y;
 			width = tetris->getposX() + x;
@@ -68,19 +89,25 @@ void TetrisContainer::MoveDeleteTetris()
 }
 void TetrisContainer::CheckTetris()
 {
-	int savePosition = 0;
+	int savePosition = initZero;
 	int saveXPos;
 	int saveYPos;
 
-	for (int y = 0; y < 4; y++)
+	for (int num = initZero; num < blockNum; num++)
 	{
-		for (int x = 0; x < 4; x++)
+		saveY[num] = initZero;
+		saveX[num] = initZero;
+	}
+
+	for (int y = initZero; y < tetrisMaxY; y++)
+	{
+		for (int x = initZero; x < tetrisMaxX; x++)
 		{
 			height = tetris->getposY() + y;
 			width = tetris->getposX() + x;
 			calculateTetris = (*(*(saveTetris + y) + x)); //TetrisMember의 주소값을 Y씩 더한 다음에 값을 가져오고(첫번째 가져오기) 다시 X씩 더한 다음 값을 가져옴(2차원 배열)
 
-			if (map[height][width] == calculateTetris)
+			if (map[height][width] == calculateTetris && calculateTetris == exist)
 			{
 				saveX[savePosition] = width;
 				saveY[savePosition] = height;
@@ -89,14 +116,39 @@ void TetrisContainer::CheckTetris()
 		}
 	}
 
-	for (int position = 0; position < savePosition; position++)
+	for (int position = initZero; position < savePosition; position++)
 	{
-		saveXPos = saveX[position];
-		saveYPos = ++saveY[position];
-
-		if (map[saveYPos][saveXPos] == exist)
+		if (saveY[position] > saveY[position + One])
 		{
-			tetris->ChangeisChecked();
+			saveY[position + One] = saveY[position];
+			saveX[position + One] = saveX[position];
+		}
+		else if (saveY[position] < saveY[position + One])
+		{
+			for (int num = initZero; num <= position; num++)
+			{
+				saveY[num] = noInside;
+				saveX[num] = noInside;
+			}
+		}
+		else
+		{
+			continue;
+		}
+	}
+
+	for (int position = initZero; position < savePosition; position++)
+	{
+		if (saveY[position] != noInside)
+		{
+			saveXPos = saveX[position];
+			saveYPos = ++saveY[position];
+
+			if (map[saveYPos][saveXPos] == exist)
+			{
+				tetris->ChangeisChecked();
+				break;
+			}
 		}
 	}
 }

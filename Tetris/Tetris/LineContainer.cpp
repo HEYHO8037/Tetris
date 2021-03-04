@@ -15,7 +15,7 @@ void LineContainer::LineCheck()
 {
 	for (int y = 0; y < edgeMapY; y++)
 	{
-		for (int x = 0; x < edgeMapX; x++)
+		for (int x = firstMapX; x < edgeMapX; x++)
 		{
 			if (map[y][x] == 0)
 			{
@@ -46,7 +46,7 @@ void LineContainer::LineDelete()
 				lineY = lineY - deletecount;
 			}
 
-			for (int x = 0; x < edgeMapX; x++)
+			for (int x = firstMapX; x < edgeMapX; x++)
 			{
 				map[lineY][x] = reset;
 			}
@@ -59,9 +59,9 @@ void LineContainer::LineDelete()
 void LineContainer::LineCreate()
 {
 	srand(time(NULL));
-	int emptyblock = rand() % 20;
+	int emptyblock = rand() % maxRandom + plusMinimum;
 	
-	for (int x = 0; x < edgeMapX; x++)
+	for (int x = firstMapX; x < edgeMapX; x++)
 	{
 		if (x == emptyblock)
 		{
@@ -76,9 +76,9 @@ void LineContainer::LineCreate()
 
 void LineContainer::LineMove()
 {
-	for (int y = lastLineY; y > 0; y--)
+	for (int y = lastLineY; y >= firstLineY; y--)
 	{
-		for (int x = 0; x < edgeMapX; x++)
+		for (int x = firstMapX; x < edgeMapX; x++)
 		{
 			if (y == lastLineY)
 			{
