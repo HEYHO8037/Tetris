@@ -33,7 +33,10 @@ void TetrisContainer::ShowTetris()
 			height = tetris->getposY() + y;
 			width = tetris->getposX() + x;
 			calculateTetris = (*(*(saveTetris + y) + x)); //TetrisMember의 주소값을 Y씩 더한 다음에 값을 가져오고(첫번째 가져오기) 다시 X씩 더한 다음 값을 가져옴(2차원 배열)
-			map[height][width] += calculateTetris;
+			if (calculateTetris == exist)
+			{
+				(*(map + height))[width] += calculateTetris;
+			}
 		}
 	}
 }
@@ -41,10 +44,25 @@ void TetrisContainer::ShowTetris()
 void TetrisContainer::MoveTetris(int xORy, int direction)
 {
 
-	if (xORy == dirUp || xORy == dirDown)
+	if (xORy == dirDown)
 	{
 		MoveDeleteTetris();
 		tetris->ChangePosY(direction);
+		ShowTetris();
+		CheckTetris();
+		if (crashTetris == true)
+		{
+			MoveDeleteTetris();
+			if (direction == PLUS)
+			{
+				tetris->ChangePosY(MINUS);
+			}
+		}
+		else
+		{
+			MoveDeleteTetris();
+		}
+
 	}
 	else if (xORy == dirLeft || xORy == dirRight)
 	{
@@ -81,73 +99,34 @@ void TetrisContainer::MoveDeleteTetris()
 	{
 		for (int x = initZero; x < tetrisMaxX; x++)
 		{
+			calculateTetris = (*(*(saveTetris + y) + x));
 			height = tetris->getposY() + y;
 			width = tetris->getposX() + x;
-			map[height][width] = 0;
+
+			if ((*(map + height))[width] == exist && 
+				(*(map + height))[width] == calculateTetris)
+			{
+				(*(map + height))[width] = 0;
+			}
 		}
 	}
 }
 void TetrisContainer::CheckTetris()
 {
-	int savePosition = initZero;
-	int saveXPos;
-	int saveYPos;
-
-	for (int num = initZero; num < blockNum; num++)
-	{
-		saveY[num] = initZero;
-		saveX[num] = initZero;
-	}
+	int checkMapTetris;
 
 	for (int y = initZero; y < tetrisMaxY; y++)
 	{
 		for (int x = initZero; x < tetrisMaxX; x++)
 		{
-			height = tetris->getposY() + y;
-			width = tetris->getposX() + x;
-			calculateTetris = (*(*(saveTetris + y) + x)); //TetrisMember의 주소값을 Y씩 더한 다음에 값을 가져오고(첫번째 가져오기) 다시 X씩 더한 다음 값을 가져옴(2차원 배열)
+			height = tetris->getposY()+y;
+			width = tetris->getposX()+x;
+			checkMapTetris = (*(map + height))[width];
 
-			if (map[height][width] == calculateTetris && calculateTetris == exist)
+			if (checkMapTetris > exist)
 			{
-				saveX[savePosition] = width;
-				saveY[savePosition] = height;
-				savePosition++;
-			}
-		}
-	}
-
-	for (int position = initZero; position < savePosition; position++)
-	{
-		if (saveY[position] > saveY[position + One])
-		{
-			saveY[position + One] = saveY[position];
-			saveX[position + One] = saveX[position];
-		}
-		else if (saveY[position] < saveY[position + One])
-		{
-			for (int num = initZero; num <= position; num++)
-			{
-				saveY[num] = noInside;
-				saveX[num] = noInside;
-			}
-		}
-		else
-		{
-			continue;
-		}
-	}
-
-	for (int position = initZero; position < savePosition; position++)
-	{
-		if (saveY[position] != noInside)
-		{
-			saveXPos = saveX[position];
-			saveYPos = ++saveY[position];
-
-			if (map[saveYPos][saveXPos] == exist)
-			{
-				tetris->ChangeisChecked();
-				break;
+				crashTetris = true;
+				(*(map + height))[width] = exist;
 			}
 		}
 	}

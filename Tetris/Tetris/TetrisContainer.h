@@ -11,7 +11,6 @@ constexpr int mapY = 40;
 
 enum dir
 { 
-	dirUp,
 	dirDown,
 	dirLeft,
 	dirRight
@@ -35,6 +34,8 @@ private:
 	int saveY[MaxSaveNum];
 	bool deleteTetris = true;
 	bool isTetrisStop;
+	bool crashTetris = false;
+
 	int saveRotateTetris[tetrisMaxY][tetrisMaxX];
 
 	Tetris* tetris;

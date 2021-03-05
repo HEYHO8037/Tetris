@@ -49,7 +49,6 @@ void Game::Update()
 
 		tetrisCont->MoveTetris(dirDown, PLUS);
 		tetrisCont->ShowTetris();
-		tetrisCont->CheckTetris();
 		//tetrisCont->LineProcess();
 		tetrisCont->DeleteTetris();
 	}

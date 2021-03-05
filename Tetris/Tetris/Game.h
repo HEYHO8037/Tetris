@@ -8,7 +8,7 @@ constexpr int arrowPress = 224;
 constexpr int arrowDown = 80;
 constexpr int arrowLeft = 75;
 constexpr int arrowRight = 77;
-constexpr int spaceBar = 32;
+constexpr int spaceBar = 13;
 
 class Game
 {

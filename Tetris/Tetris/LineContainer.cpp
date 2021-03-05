@@ -65,11 +65,11 @@ void LineContainer::LineCreate()
 	{
 		if (x == emptyblock)
 		{
-			map[lastLineY][x] = 0;
+			(*(map + lastLineY))[x] = 0;
 		}
 		else
 		{
-			map[lastLineY][x] = 1;
+			(*(map + lastLineY))[x] = 1;
 		}
 	}
 }
@@ -82,13 +82,13 @@ void LineContainer::LineMove()
 		{
 			if (y == lastLineY)
 			{
-				savefrontLine[first][x] = map[y][x];
-				map[y][x] = 0;
+				savefrontLine[first][x] = (*(map + y))[x];
+				(*(map + y))[x] = 0;
 			}
 			else
 			{
-				savefrontLine[second][x] = map[y][x];
-				map[y][x] = savefrontLine[first][x];
+				savefrontLine[second][x] = (*(map + y))[x];
+				(*(map + y))[x] = savefrontLine[first][x];
 				savefrontLine[first][x] = savefrontLine[second][x];
 			}
 		}
