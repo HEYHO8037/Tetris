@@ -8,5 +8,6 @@ int main(void)
 	game->Update();
 	game->Release();
 
+	delete game;
 	return 0;
 }

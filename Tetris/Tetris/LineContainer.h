@@ -23,6 +23,8 @@ constexpr int second = 1;
 constexpr int maxRandom = 18;
 constexpr int plusMinimum = 1;
 
+constexpr int zero = 0;
+
 enum Direction 
 { 
 	UP,

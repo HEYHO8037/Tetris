@@ -6,6 +6,7 @@ constexpr int mapMaxY = 40;
 constexpr int mapMaxX = 20;
 
 constexpr int MaxBuffer = 2;
+constexpr int nonExist = 0;
 
 enum GuidLine
 {

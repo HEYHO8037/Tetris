@@ -33,7 +33,7 @@ void Graphics::UpdateMap()
 	{
 		for (int length = 0; length < mapMaxX; length++)
 		{
-			if (tetrisMap[height][length] == 0)
+			if (tetrisMap[height][length] == nonExist)
 			{
 				WriteBuffer(length, height, "бр");
 			}

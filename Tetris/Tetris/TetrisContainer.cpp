@@ -43,31 +43,21 @@ void TetrisContainer::ShowTetris()
 
 void TetrisContainer::MoveTetris(int xORy, int direction)
 {
-
 	if (xORy == dirDown)
 	{
-		MoveDeleteTetris();
-		tetris->ChangePosY(direction);
-		ShowTetris();
-		CheckTetris();
-		if (crashTetris == true)
+		CheckTetrisDown();
+		if (crashTetrisY == false)
 		{
-			MoveDeleteTetris();
-			if (direction == PLUS)
-			{
-				tetris->ChangePosY(MINUS);
-			}
+			tetris->ChangePosY(direction);
 		}
-		else
-		{
-			MoveDeleteTetris();
-		}
-
 	}
 	else if (xORy == dirLeft || xORy == dirRight)
 	{
-		MoveDeleteTetris();
-		tetris->ChangePosX(direction);
+		CheckTetrisLR(direction);
+		if (crashTetrisX == false)
+		{
+			tetris->ChangePosX(direction);
+		}
 	}
 }
 
@@ -84,9 +74,9 @@ void TetrisContainer::RotateTetris()
 		}
 	}
 
-	for (int y = initZero; tetrisMaxY < 4; y++)
+	for (int y = initZero; y < tetrisMaxY; y++)
 	{
-		for (int x = initZero; tetrisMaxX < 4; x++)
+		for (int x = initZero; x < tetrisMaxX; x++)
 		{
 			tetris->setTetrisMember(saveRotateTetris[y][x]);
 		}
@@ -111,24 +101,128 @@ void TetrisContainer::MoveDeleteTetris()
 		}
 	}
 }
-void TetrisContainer::CheckTetris()
+void TetrisContainer::CheckTetrisLR(int direction)
 {
-	int checkMapTetris;
+	int checkMapTetris = initZero;
+	int crashNum = initZero;
+	int crashPosY = initZero;
+	int crashPosX = initZero;
+
+	for (int num = initZero; num < MaxSaveNum; num++)
+	{
+		saveCrashX[num] = noInside;
+		saveCrashY[num] = noInside;
+	}
+
+	MoveDeleteTetris();
+	tetris->ChangePosX(direction);
+	ShowTetris();
 
 	for (int y = initZero; y < tetrisMaxY; y++)
 	{
 		for (int x = initZero; x < tetrisMaxX; x++)
 		{
-			height = tetris->getposY()+y;
-			width = tetris->getposX()+x;
+			height = tetris->getposY() + y;
+			width = tetris->getposX() + x;
+
 			checkMapTetris = (*(map + height))[width];
 
 			if (checkMapTetris > exist)
 			{
-				crashTetris = true;
-				(*(map + height))[width] = exist;
+				crashTetrisX = true;			
+				saveCrashX[crashNum] = width;
+				saveCrashY[crashNum] = height;
+				crashNum++;
 			}
 		}
+	}
+
+	MoveDeleteTetris();
+
+	if (direction == PLUS)
+	{
+		tetris->ChangePosX(MINUS);
+	}
+	else if (direction == MINUS)
+	{
+		tetris->ChangePosX(PLUS);
+	}
+	
+	if (crashTetrisX == true)
+	{
+		if (saveCrashX[initZero] != noInside && saveCrashY[initZero] != noInside)
+		{
+			for (int num = initZero; num < crashNum; num++)
+			{
+				crashPosX = saveCrashX[num];
+				crashPosY = saveCrashY[num];
+				(*(map + crashPosY))[crashPosX] = exist;
+			}
+		}
+		else
+		{
+			crashTetrisX = false;
+		}
+
+	}
+	else
+	{
+		crashTetrisX = false;
+	}
+}
+
+void TetrisContainer::CheckTetrisDown()
+{
+	int checkMapTetris = initZero;
+	int crashNum = initZero;
+	int crashPosY = initZero;
+	int crashPosX = initZero;
+
+	for (int num = initZero; num < MaxSaveNum; num++)
+	{
+		saveCrashX[num] = noInside;
+		saveCrashY[num] = noInside;
+	}
+
+	MoveDeleteTetris();
+	tetris->ChangePosY(PLUS);
+	ShowTetris();
+
+	for (int y = initZero; y < tetrisMaxY; y++)
+	{
+		for (int x = initZero; x < tetrisMaxX; x++)
+		{
+			height = tetris->getposY() + y;
+			width = tetris->getposX() + x;
+
+			checkMapTetris = (*(map + height))[width];
+
+			if (checkMapTetris > exist && width < mapX && height < mapY)
+			{
+				crashTetrisY = true;
+				saveCrashX[crashNum] = width;
+				saveCrashY[crashNum] = height;
+				crashNum++;
+			}
+		}
+	}
+
+	MoveDeleteTetris();
+	tetris->ChangePosY(MINUS);
+
+	if (crashTetrisY == true)
+	{
+		for (int num = initZero; num < 4; num++)
+		{
+			crashPosX = saveCrashX[num];
+			crashPosY = saveCrashY[num];
+			(*(map + crashPosY))[crashPosX] = exist;
+		}
+			tetris->ChangeisChecked();
+	}
+	else
+	{
+		crashTetrisY = false;
 	}
 }
 
@@ -144,12 +238,19 @@ void TetrisContainer::LineProcess()
 	}
 }
 
-
 void TetrisContainer::DeleteTetris()
 {
-	if (tetris->getIsChecked() == true)
+	bool tetrisGetChecked = tetris->getIsChecked();
+	if (tetrisGetChecked == true)
 	{
-		delete tetris;
 		deleteTetris = true;
+		crashTetrisY = false;
+		crashTetrisX = false;
+		delete tetris;
 	}
+}
+
+void TetrisContainer::DeleteLineContainer()
+{
+	delete lineCont;
 }

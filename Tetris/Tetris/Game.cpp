@@ -19,6 +19,7 @@ void Game::Update()
 
 		tetrisCont->InitTetris();
 
+		
 		if (_kbhit())
 		{
 			keyNum = _getch();
@@ -49,8 +50,9 @@ void Game::Update()
 
 		tetrisCont->MoveTetris(dirDown, PLUS);
 		tetrisCont->ShowTetris();
-		//tetrisCont->LineProcess();
 		tetrisCont->DeleteTetris();
+
+		Sleep(100);
 	}
 }
 

@@ -32,7 +32,7 @@ void LineContainer::LineCheck()
 
 void LineContainer::LineDelete()
 {
-	int lineY;
+	int lineY = zero;
 	int deletecount = reset;
 
 	if (lineNum != 0)

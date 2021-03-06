@@ -26,15 +26,24 @@ class TetrisContainer
 {
 private:
 	int (*map)[mapX];
+
 	int height;
 	int width;
 	int calculateTetris;
+
 	const int(*saveTetris)[MaxSaveNum];
+
 	int saveX[MaxSaveNum];
 	int saveY[MaxSaveNum];
+
+	int saveCrashX[MaxSaveNum];
+	int saveCrashY[MaxSaveNum];
+
 	bool deleteTetris = true;
 	bool isTetrisStop;
-	bool crashTetris = false;
+
+	bool crashTetrisX = false;
+	bool crashTetrisY = false;
 
 	int saveRotateTetris[tetrisMaxY][tetrisMaxX];
 
@@ -49,9 +58,12 @@ public:
 	void MoveTetris(int xORy, int direction);
 	void RotateTetris();
 	void MoveDeleteTetris();
-	void CheckTetris();
+	void CheckTetrisLR(int direction);
+	void CheckTetrisDown();
 	void LineProcess();
 	void DeleteTetris();
+	void DeleteLineContainer();
+
 	
 };
 
