@@ -127,7 +127,7 @@ void TetrisContainer::CheckTetrisLR(int direction)
 
 			checkMapTetris = (*(map + height))[width];
 
-			if (checkMapTetris > exist)
+			if (checkMapTetris > exist && width < mapX && width > zero)
 			{
 				crashTetrisX = true;			
 				saveCrashX[crashNum] = width;
@@ -197,7 +197,9 @@ void TetrisContainer::CheckTetrisDown()
 
 			checkMapTetris = (*(map + height))[width];
 
-			if (checkMapTetris > exist && width < mapX && height < mapY)
+			if (checkMapTetris > exist 
+				&& width < mapX && width > zero
+				&& height < mapY && height > zero)
 			{
 				crashTetrisY = true;
 				saveCrashX[crashNum] = width;
