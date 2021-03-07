@@ -67,21 +67,15 @@ const TetrisType* Tetris::getTetrisMember()
 	 return &tetrisSelectMember;
 }
 
-const void Tetris::setTetrisMember(int settingMember)
+const void Tetris::setTetrisMember(int settingMember[4][4])
 {
-	if (setTetrisY == OverSetTetris)
+	saveSettingMember = settingMember;
+	
+	for (int y = initZero; y < blockNum; y++)
 	{
-		setTetrisX = initZero;
-		setTetrisY = initZero;
-	}
-	else if (setTetrisX == MaxSetTetrisX)
-	{
-		setTetrisX = initZero;
-		setTetrisY++;
-	}
-	else
-	{
-		tetrisSelectMember[setTetrisY][setTetrisX] = settingMember;
-		setTetrisX++;
+		for (int x = initZero; x < blockNum; x++)
+		{
+			tetrisSelectMember[y][x] = *(*(saveSettingMember + y) + x);
+		}
 	}
 }

@@ -42,6 +42,7 @@ private:
 public:
 	LineContainer();
 	LineContainer(int getMap[40][20]);
+
 	void LineCheck();
 	void LineDelete();
 	void LineCreate();

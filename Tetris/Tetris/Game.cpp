@@ -43,10 +43,11 @@ void Game::Update()
 			{
 				if (keyNum == spaceBar)
 				{
-					tetrisCont->RotateTetris();
+					tetrisCont->CheckAndRotateTetris();
 				}
 			}
 		}
+		
 
 		tetrisCont->MoveTetris(dirDown, PLUS);
 		tetrisCont->ShowTetris();

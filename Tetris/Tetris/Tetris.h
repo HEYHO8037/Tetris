@@ -75,8 +75,8 @@ private:
 	int posX;
 	int posY;
 	bool isChecked = false;
-	int setTetrisY = initZero;
-	int setTetrisX = initZero;
+	int (*saveSettingMember)[4];
+
 public:
 	Tetris();
 	void ChangePosX(int plusminus);
@@ -87,6 +87,6 @@ public:
     int getposY();
 	const bool getIsChecked();
 	const TetrisType* getTetrisMember();
-	const void setTetrisMember(int settingMember);
+	const void setTetrisMember(int settingMember[4][4]);
 };
 

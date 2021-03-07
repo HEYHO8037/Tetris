@@ -61,25 +61,45 @@ void TetrisContainer::MoveTetris(int xORy, int direction)
 	}
 }
 
-void TetrisContainer::RotateTetris()
+void TetrisContainer::RotateTetris(int direction)
 {
+
 	MoveDeleteTetris();
 
-	for (int y = initZero; y < tetrisMaxY; y++)
+	if (direction == rotate)
 	{
-		for (int x = initZero; x < tetrisMaxX; x++)
+		for (int y = initZero; y < tetrisMaxY; y++)
 		{
-			calculateTetris = (*(*(saveTetris + y) + x)); //TetrisMember의 주소값을 Y씩 더한 다음에 값을 가져오고(첫번째 가져오기) 다시 X씩 더한 다음 값을 가져옴(2차원 배열)
-			saveRotateTetris[x][y] = calculateTetris;
+			for (int x = initZero; x < tetrisMaxX; x++)
+			{
+				calculateTetris = (*(*(saveTetris + y) + x)); //TetrisMember의 주소값을 Y씩 더한 다음에 값을 가져오고(첫번째 가져오기) 다시 X씩 더한 다음 값을 가져옴(2차원 배열)
+				saveRotateTetris[MaxBlockNum-x][y] = calculateTetris; // 3,2,1,0 순으로 순차적으로 그린다.
+			}
 		}
-	}
 
-	for (int y = initZero; y < tetrisMaxY; y++)
+		tetris->setTetrisMember(saveRotateTetris);
+	}
+	else if (direction == reRotate)
 	{
-		for (int x = initZero; x < tetrisMaxX; x++)
+		for (int y = initZero; y < tetrisMaxY; y++)
 		{
-			tetris->setTetrisMember(saveRotateTetris[y][x]);
+			for (int x = MaxBlockNum; x >= initZero; x--)
+			{
+				calculateTetris = (*(*(saveTetris + x) + y)); //TetrisMember의 주소값을 Y씩 더한 다음에 값을 가져오고(첫번째 가져오기) 다시 X씩 더한 다음 값을 가져옴(2차원 배열)
+				saveRotateTetris[y][MaxBlockNum-x] = calculateTetris;
+			}
 		}
+
+		tetris->setTetrisMember(saveRotateTetris);
+	}
+}
+
+void TetrisContainer::CheckAndRotateTetris()
+{
+	CheckRotateTetris();
+	if (crashTetrisRotate == false)
+	{
+		RotateTetris(rotate);
 	}
 }
 
@@ -127,7 +147,7 @@ void TetrisContainer::CheckTetrisLR(int direction)
 
 			checkMapTetris = (*(map + height))[width];
 
-			if (checkMapTetris > exist && width < mapX && width > zero)
+			if (checkMapTetris > exist && width < mapX && width >= zero)
 			{
 				crashTetrisX = true;			
 				saveCrashX[crashNum] = width;
@@ -197,7 +217,7 @@ void TetrisContainer::CheckTetrisDown()
 
 			checkMapTetris = (*(map + height))[width];
 
-			if (checkMapTetris > exist 
+			if (checkMapTetris > exist
 				&& width < mapX && width > zero
 				&& height < mapY && height > zero)
 			{
@@ -220,12 +240,73 @@ void TetrisContainer::CheckTetrisDown()
 			crashPosY = saveCrashY[num];
 			(*(map + crashPosY))[crashPosX] = exist;
 		}
-			tetris->ChangeisChecked();
+		tetris->ChangeisChecked();
 	}
 	else
 	{
 		crashTetrisY = false;
 	}
+
+}
+void TetrisContainer::CheckRotateTetris()
+{
+	int checkMapTetris = initZero;
+	int crashNum = initZero;
+	int crashPosY = initZero;
+	int crashPosX = initZero;
+
+	for (int num = initZero; num < MaxSaveNum; num++)
+	{
+		saveCrashX[num] = noInside;
+		saveCrashY[num] = noInside;
+	}
+
+	MoveDeleteTetris();
+	RotateTetris(rotate);
+	ShowTetris();
+
+	for (int y = initZero; y < tetrisMaxY; y++)
+	{
+		for (int x = initZero; x < tetrisMaxX; x++)
+		{
+			height = tetris->getposY() + y;
+			width = tetris->getposX() + x;
+
+			checkMapTetris = (*(map + height))[width];
+
+			if (checkMapTetris > exist
+				&& width < mapX && width >= zero
+				&& height < mapY && height >= zero)
+			{
+				crashTetrisRotate = true;
+				saveCrashX[crashNum] = width;
+				saveCrashY[crashNum] = height;
+				crashNum++;
+			}
+		}
+	}
+
+	MoveDeleteTetris();
+
+	if (crashTetrisRotate == true)
+	{
+		if (saveCrashX[initZero] != noInside && saveCrashY[initZero] != noInside)
+		{
+			for (int num = initZero; num < crashNum; num++)
+			{
+				crashPosX = saveCrashX[num];
+				crashPosY = saveCrashY[num];
+				(*(map + crashPosY))[crashPosX] = exist;
+			}
+		}
+		else
+		{
+			crashTetrisRotate = false;
+		}
+	}
+
+
+	RotateTetris(reRotate);
 }
 
 void TetrisContainer::LineProcess()
