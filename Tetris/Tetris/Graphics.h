@@ -19,9 +19,9 @@ enum GuidLine
 class Graphics
 {
 private:
-	HANDLE hBuffer[MaxBuffer];
-	int screenIndex;
-	int* score;
+	HANDLE hBuffer[MaxBuffer] = { 0 };
+	int screenIndex = 0;
+	int* score = nullptr;
 
 public:
 	int tetrisMap[mapMaxY][mapMaxX];
@@ -35,7 +35,7 @@ public:
 	void GameOverUI();
 
 	void CreateBuffer();
-	void WriteBuffer(int x, int y, const char str[]);
+	void WriteBuffer(int x, int y, const char *str);
 	void FlippingBuffer();
 	void ClearBuffer();
 	void DeleteBuffer();

@@ -42,7 +42,6 @@ void Graphics::UpdateMap()
 				WriteBuffer(length, height, "бс");
 			}
 		}
-		std::cout << std::endl;
 	}
 }
 
@@ -65,8 +64,23 @@ void Graphics::StartUI()
 
 void Graphics::GameOverUI()
 {
-
+	for (int height = 0; height < mapMaxY; height++)
+	{
+		for (int length = 0; length < mapMaxX; length++)
+		{
+			if (height == 0 || height == mapMaxY - 1 ||
+				length == 0 || length == mapMaxX - 1)
+			{
+				WriteBuffer(length, height, "бс");	
+			}
+			else
+			{
+				WriteBuffer(length, height, "бр");
+			}
+		}
+	}
 }
+
 
 void Graphics::CreateBuffer()
 {
@@ -93,10 +107,10 @@ void Graphics::CreateBuffer()
 
 }
 
-void Graphics::WriteBuffer(int x, int y, const char str[])
+void Graphics::WriteBuffer(int x, int y, const char* str)
 {
 	DWORD dw;
-	COORD CursorPosition = { x , y };
+	COORD CursorPosition = { x * 2 , y };
 	SetConsoleCursorPosition(hBuffer[screenIndex], CursorPosition);
 	WriteFile(hBuffer[screenIndex], str, strlen(str), &dw, NULL);
 }
@@ -118,7 +132,7 @@ void Graphics::ClearBuffer()
 {
 	COORD Coor = { 0,0 };
 	DWORD dw;
-	FillConsoleOutputCharacter(hBuffer[screenIndex], ' ', 10000, Coor, &dw);
+	FillConsoleOutputCharacter(hBuffer[screenIndex], ' ', 1000, Coor, &dw);
 }
 
 void Graphics::DeleteBuffer()

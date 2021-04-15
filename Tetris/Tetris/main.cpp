@@ -1,5 +1,5 @@
 #include "Game.h"
-int main(void)
+void main()
 {
 	system("mode con cols=40 lines=50");
 	Game* game = new Game();
@@ -9,5 +9,4 @@ int main(void)
 	game->Release();
 
 	delete game;
-	return 0;
 }

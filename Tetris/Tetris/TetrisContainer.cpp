@@ -12,6 +12,8 @@ TetrisContainer::TetrisContainer(int getMap[mapY][mapX])
 	lineCont = new LineContainer(getMap);
 }
 
+
+
 void TetrisContainer::InitTetris()
 {
 	if (deleteTetris == true)
@@ -33,6 +35,7 @@ void TetrisContainer::ShowTetris()
 			height = tetris->getposY() + y;
 			width = tetris->getposX() + x;
 			calculateTetris = (*(*(saveTetris + y) + x)); //TetrisMember의 주소값을 Y씩 더한 다음에 값을 가져오고(첫번째 가져오기) 다시 X씩 더한 다음 값을 가져옴(2차원 배열)
+			
 			if (calculateTetris == exist)
 			{
 				(*(map + height))[width] += calculateTetris;
@@ -63,9 +66,6 @@ void TetrisContainer::MoveTetris(int xORy, int direction)
 
 void TetrisContainer::RotateTetris(int direction)
 {
-
-	MoveDeleteTetris();
-
 	if (direction == rotate)
 	{
 		for (int y = initZero; y < tetrisMaxY; y++)
@@ -73,7 +73,7 @@ void TetrisContainer::RotateTetris(int direction)
 			for (int x = initZero; x < tetrisMaxX; x++)
 			{
 				calculateTetris = (*(*(saveTetris + y) + x)); //TetrisMember의 주소값을 Y씩 더한 다음에 값을 가져오고(첫번째 가져오기) 다시 X씩 더한 다음 값을 가져옴(2차원 배열)
-				saveRotateTetris[MaxBlockNum-x][y] = calculateTetris; // 3,2,1,0 순으로 순차적으로 그린다.
+				saveRotateTetris[MaxBlockNum - x][y] = calculateTetris; // 3,2,1,0 순으로 순차적으로 그린다.
 			}
 		}
 
@@ -86,7 +86,7 @@ void TetrisContainer::RotateTetris(int direction)
 			for (int x = MaxBlockNum; x >= initZero; x--)
 			{
 				calculateTetris = (*(*(saveTetris + x) + y)); //TetrisMember의 주소값을 Y씩 더한 다음에 값을 가져오고(첫번째 가져오기) 다시 X씩 더한 다음 값을 가져옴(2차원 배열)
-				saveRotateTetris[y][MaxBlockNum-x] = calculateTetris;
+				saveRotateTetris[y][MaxBlockNum - x] = calculateTetris;
 			}
 		}
 
@@ -176,14 +176,13 @@ void TetrisContainer::CheckTetrisLR(int direction)
 			{
 				crashPosX = saveCrashX[num];
 				crashPosY = saveCrashY[num];
-				(*(map + crashPosY))[crashPosX] = exist;
+				*(*(map + crashPosY) + crashPosX) = exist;
 			}
 		}
 		else
 		{
 			crashTetrisX = false;
 		}
-
 	}
 	else
 	{
@@ -296,7 +295,7 @@ void TetrisContainer::CheckRotateTetris()
 			{
 				crashPosX = saveCrashX[num];
 				crashPosY = saveCrashY[num];
-				(*(map + crashPosY))[crashPosX] = exist;
+				*(*(map + crashPosY)+crashPosX) = exist;
 			}
 		}
 		else
@@ -336,4 +335,18 @@ void TetrisContainer::DeleteTetris()
 void TetrisContainer::DeleteLineContainer()
 {
 	delete lineCont;
+}
+
+bool TetrisContainer::IsGameOver()
+{
+	bool isStop = tetris->getIsChecked();
+	int positionY = tetris->getposY();
+	if (isStop == true && positionY < 0)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }

@@ -2,7 +2,7 @@
 #include <random>
 #include <iostream>
 
-constexpr int initTetrisX = 8, initTetrisY = 1;
+constexpr int initTetrisX = 8, initTetrisY = -4;
 constexpr int tetrisMaxY = 4, tetrisMaxX = 4;
 
 constexpr int maxMember = 7;
@@ -75,7 +75,6 @@ private:
 	int posX;
 	int posY;
 	bool isChecked = false;
-	int (*saveSettingMember)[4];
 
 public:
 	Tetris();

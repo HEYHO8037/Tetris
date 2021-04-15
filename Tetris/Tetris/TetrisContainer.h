@@ -80,6 +80,8 @@ public:
 	void DeleteTetris();
 	void DeleteLineContainer();
 
+	bool IsGameOver();
+
 	
 };
 

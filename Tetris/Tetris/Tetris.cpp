@@ -69,13 +69,12 @@ const TetrisType* Tetris::getTetrisMember()
 
 const void Tetris::setTetrisMember(int settingMember[4][4])
 {
-	saveSettingMember = settingMember;
 	
 	for (int y = initZero; y < blockNum; y++)
 	{
 		for (int x = initZero; x < blockNum; x++)
 		{
-			tetrisSelectMember[y][x] = *(*(saveSettingMember + y) + x);
+			tetrisSelectMember[y][x] = settingMember[y][x];
 		}
 	}
 }

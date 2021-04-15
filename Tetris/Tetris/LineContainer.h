@@ -34,7 +34,7 @@ enum Direction
 class LineContainer
 {
 private:
-	int (*map)[20];
+	int (*map)[20] = nullptr;
 	bool isLineChecked = true;
 	int saveLineY[maxDelLine];
 	int savefrontLine[saveNum][edgeMapX];

@@ -51,14 +51,35 @@ void Game::Update()
 
 		tetrisCont->MoveTetris(dirDown, PLUS);
 		tetrisCont->ShowTetris();
+
+		if (tetrisCont->IsGameOver())
+		{
+			for (int i = 0; i < 2; i++)
+			{
+				graphics->ClearBuffer();
+				graphics->FlippingBuffer();
+			}
+
+			graphics->GameOverUI();
+			graphics->FlippingBuffer();
+			
+			Sleep(100);
+			break;
+		}
+
 		tetrisCont->DeleteTetris();
 
 		Sleep(100);
+
 	}
 }
 
 void Game::Release()
 {
+	tetrisCont->DeleteTetris();
+	tetrisCont->DeleteLineContainer();
+	graphics->DeleteBuffer();
+
 	delete tetrisCont;
 	delete graphics;
 }
